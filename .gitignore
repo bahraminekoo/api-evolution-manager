@@ -56,3 +56,8 @@ backend/outputs/
 backend/models/
 *.db
 *.sqlite
+
+# Temporary setup/instruction files (keep local only)
+GITHUB_SETUP.md
+PUSH_TO_GITHUB.md
+README_GITHUB.md
