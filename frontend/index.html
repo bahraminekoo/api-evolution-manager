@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Evolution Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        .impact-critical { color: #dc2626; }
+        .impact-high { color: #ea580c; }
+        .impact-medium { color: #f59e0b; }
+        .impact-low { color: #84cc16; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="git-compare" class="w-8 h-8"></i>
+                    <h1 class="text-3xl font-bold">API Evolution Manager</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm opacity-90">Powered by LangChain + LangGraph</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="card rounded-xl shadow-xl p-8 mb-8">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Intelligent API Evolution Analysis</h2>
+                <p class="text-gray-600">Multi-agent AI system for detecting breaking changes and generating migration guides</p>
+            </div>
+            
+            <div class="flex justify-center">
+                <button id="runDemoBtn" class="gradient-bg text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition flex items-center space-x-2">
+                    <i data-lucide="play" class="w-5 h-5"></i>
+                    <span>Run Demo Analysis</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden card rounded-xl shadow-xl p-8 mb-8">
+            <div class="flex items-center justify-center space-x-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                <span class="text-gray-700 font-medium">Analyzing API evolution...</span>
+            </div>
+            <div class="mt-4 space-y-2 text-sm text-gray-600">
+                <div id="step1" class="opacity-50">📊 Analyzing API specifications...</div>
+                <div id="step2" class="opacity-50">🔍 Comparing versions...</div>
+                <div id="step3" class="opacity-50">📈 Analyzing usage patterns...</div>
+                <div id="step4" class="opacity-50">⚠️ Assessing impact...</div>
+                <div id="step5" class="opacity-50">📝 Generating migration guide...</div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden space-y-6">
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="card rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600 text-sm">Breaking Changes</span>
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>
+                    </div>
+                    <div id="totalChanges" class="text-3xl font-bold text-gray-800">0</div>
+                </div>
+                
+                <div class="card rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600 text-sm">Risk Score</span>
+                        <i data-lucide="activity" class="w-5 h-5 text-orange-500"></i>
+                    </div>
+                    <div id="riskScore" class="text-3xl font-bold text-gray-800">0.0</div>
+                </div>
+                
+                <div class="card rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600 text-sm">Affected Clients</span>
+                        <i data-lucide="users" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <div id="affectedClients" class="text-3xl font-bold text-gray-800">0</div>
+                </div>
+                
+                <div class="card rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600 text-sm">Timeline (days)</span>
+                        <i data-lucide="calendar" class="w-5 h-5 text-green-500"></i>
+                    </div>
+                    <div id="timeline" class="text-3xl font-bold text-gray-800">0</div>
+                </div>
+            </div>
+
+            <!-- Version Info -->
+            <div class="card rounded-xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i data-lucide="info" class="w-5 h-5 mr-2"></i>
+                    Version Change
+                </h3>
+                <div class="flex items-center space-x-4">
+                    <div class="flex-1">
+                        <div class="text-sm text-gray-600 mb-1">From</div>
+                        <div id="oldVersion" class="text-lg font-semibold text-gray-800">-</div>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-6 h-6 text-gray-400"></i>
+                    <div class="flex-1">
+                        <div class="text-sm text-gray-600 mb-1">To</div>
+                        <div id="newVersion" class="text-lg font-semibold text-gray-800">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Summary -->
+            <div class="card rounded-xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i data-lucide="file-text" class="w-5 h-5 mr-2"></i>
+                    Impact Summary
+                </h3>
+                <div id="impactSummary" class="prose max-w-none text-gray-700 whitespace-pre-wrap"></div>
+            </div>
+
+            <!-- Breaking Changes -->
+            <div class="card rounded-xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i data-lucide="alert-circle" class="w-5 h-5 mr-2"></i>
+                    Breaking Changes
+                </h3>
+                <div id="breakingChangesList" class="space-y-4"></div>
+            </div>
+
+            <!-- Migration Guide -->
+            <div class="card rounded-xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+                    Migration Guide
+                </h3>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-800 mb-2">Overview</h4>
+                    <div id="migrationOverview" class="text-gray-700"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <div class="text-sm text-gray-600">Estimated Effort</div>
+                        <div id="estimatedEffort" class="text-lg font-semibold text-gray-800">-</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-600">Rollback Strategy</div>
+                        <div class="text-sm text-gray-700" id="rollbackStrategy">-</div>
+                    </div>
+                </div>
+
+                <h4 class="font-semibold text-gray-800 mb-3">Migration Steps</h4>
+                <div id="migrationSteps" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden card rounded-xl shadow-xl p-8 mb-8">
+            <div class="flex items-center space-x-4 text-red-600">
+                <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+                <div>
+                    <h3 class="font-bold text-lg">Analysis Failed</h3>
+                    <p id="errorMessage" class="text-sm mt-1"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        const API_BASE_URL = 'http://localhost:8000';
+
+        document.getElementById('runDemoBtn').addEventListener('click', runDemoAnalysis);
+
+        async function runDemoAnalysis() {
+            // Hide results and errors
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('errorState').classList.add('hidden');
+            
+            // Show loading
+            document.getElementById('loadingState').classList.remove('hidden');
+            
+            // Animate steps
+            animateSteps();
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/analyze/demo`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(data);
+                
+                // Hide loading
+                document.getElementById('loadingState').classList.add('hidden');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('errorState').classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = error.message;
+            }
+        }
+
+        function animateSteps() {
+            const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    document.getElementById(step).classList.remove('opacity-50');
+                    document.getElementById(step).classList.add('opacity-100', 'font-semibold');
+                }, index * 1000);
+            });
+        }
+
+        function displayResults(data) {
+            // Show results section
+            document.getElementById('resultsSection').classList.remove('hidden');
+
+            // Update summary cards
+            document.getElementById('totalChanges').textContent = data.breaking_changes.length;
+            document.getElementById('riskScore').textContent = data.risk_score.toFixed(1) + '/10';
+            document.getElementById('affectedClients').textContent = data.total_affected_clients;
+            document.getElementById('timeline').textContent = data.migration_guide?.recommended_timeline_days || 0;
+
+            // Update version info
+            document.getElementById('oldVersion').textContent = data.old_version;
+            document.getElementById('newVersion').textContent = data.new_version;
+
+            // Update impact summary
+            document.getElementById('impactSummary').textContent = data.summary;
+
+            // Display breaking changes
+            const changesList = document.getElementById('breakingChangesList');
+            changesList.innerHTML = '';
+            
+            data.breaking_changes.forEach((change, index) => {
+                const impactClass = `impact-${change.impact_level}`;
+                const changeEl = document.createElement('div');
+                changeEl.className = 'border-l-4 border-gray-300 pl-4 py-2';
+                changeEl.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="font-semibold text-gray-800">${change.endpoint_key}</div>
+                            <div class="text-sm text-gray-600 mt-1">${change.description}</div>
+                            <div class="flex items-center space-x-4 mt-2 text-xs">
+                                <span class="${impactClass} font-semibold uppercase">${change.impact_level} Impact</span>
+                                <span class="text-gray-500">Type: ${change.change_type}</span>
+                                <span class="text-gray-500">Usage: ${change.usage_count.toLocaleString()} calls</span>
+                            </div>
+                            ${change.affected_clients.length > 0 ? `
+                                <div class="text-xs text-gray-600 mt-1">
+                                    Affected: ${change.affected_clients.join(', ')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                changesList.appendChild(changeEl);
+            });
+
+            // Display migration guide
+            if (data.migration_guide) {
+                document.getElementById('migrationOverview').textContent = data.migration_guide.overview;
+                document.getElementById('estimatedEffort').textContent = 
+                    `${data.migration_guide.estimated_total_effort_hours} hours`;
+                document.getElementById('rollbackStrategy').textContent = 
+                    data.migration_guide.rollback_strategy?.substring(0, 100) + '...';
+
+                const stepsContainer = document.getElementById('migrationSteps');
+                stepsContainer.innerHTML = '';
+
+                data.migration_guide.steps.forEach(step => {
+                    const stepEl = document.createElement('div');
+                    stepEl.className = 'border rounded-lg p-4';
+                    stepEl.innerHTML = `
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="font-semibold text-gray-800">Step ${step.step_number}: ${step.title}</div>
+                            <span class="text-sm text-gray-600">${step.estimated_effort_hours}h</span>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-3">${step.description}</div>
+                        ${step.code_example_before ? `
+                            <div class="mb-2">
+                                <div class="text-xs text-gray-500 mb-1">Before:</div>
+                                <pre class="code-block text-xs">${escapeHtml(step.code_example_before)}</pre>
+                            </div>
+                        ` : ''}
+                        ${step.code_example_after ? `
+                            <div>
+                                <div class="text-xs text-gray-500 mb-1">After:</div>
+                                <pre class="code-block text-xs">${escapeHtml(step.code_example_after)}</pre>
+                            </div>
+                        ` : ''}
+                    `;
+                    stepsContainer.appendChild(stepEl);
+                });
+            }
+
+            // Reinitialize icons
+            lucide.createIcons();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

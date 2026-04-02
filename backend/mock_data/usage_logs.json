@@ -1,0 +1,83 @@
+{
+  "api_version": "1.0.0",
+  "time_period_days": 30,
+  "total_requests": 45780,
+  "clients": [
+    {
+      "name": "web-app",
+      "version": "3.2.1",
+      "contact": "frontend-team@example.com"
+    },
+    {
+      "name": "mobile-app",
+      "version": "2.1.0",
+      "contact": "mobile-team@example.com"
+    },
+    {
+      "name": "admin-panel",
+      "version": "1.5.0",
+      "contact": "admin-team@example.com"
+    },
+    {
+      "name": "analytics-service",
+      "version": "4.0.2",
+      "contact": "data-team@example.com"
+    }
+  ],
+  "endpoint_usage": {
+    "GET /users": {
+      "endpoint_key": "GET /users",
+      "total_calls": 15000,
+      "unique_clients": 3,
+      "clients": ["web-app", "mobile-app", "admin-panel"],
+      "avg_calls_per_day": 500,
+      "last_used": "2026-04-01T15:30:00Z",
+      "error_rate": 0.02
+    },
+    "GET /users/{id}": {
+      "endpoint_key": "GET /users/{id}",
+      "total_calls": 8000,
+      "unique_clients": 4,
+      "clients": ["web-app", "mobile-app", "admin-panel", "analytics-service"],
+      "avg_calls_per_day": 267,
+      "last_used": "2026-04-01T16:45:00Z",
+      "error_rate": 0.01
+    },
+    "DELETE /users/{id}": {
+      "endpoint_key": "DELETE /users/{id}",
+      "total_calls": 50,
+      "unique_clients": 1,
+      "clients": ["admin-panel"],
+      "avg_calls_per_day": 1.67,
+      "last_used": "2026-03-28T10:20:00Z",
+      "error_rate": 0.0
+    },
+    "GET /products": {
+      "endpoint_key": "GET /products",
+      "total_calls": 12500,
+      "unique_clients": 2,
+      "clients": ["web-app", "mobile-app"],
+      "avg_calls_per_day": 417,
+      "last_used": "2026-04-01T17:00:00Z",
+      "error_rate": 0.03
+    },
+    "POST /products": {
+      "endpoint_key": "POST /products",
+      "total_calls": 230,
+      "unique_clients": 1,
+      "clients": ["admin-panel"],
+      "avg_calls_per_day": 7.67,
+      "last_used": "2026-04-01T14:15:00Z",
+      "error_rate": 0.05
+    },
+    "POST /orders": {
+      "endpoint_key": "POST /orders",
+      "total_calls": 10000,
+      "unique_clients": 2,
+      "clients": ["web-app", "mobile-app"],
+      "avg_calls_per_day": 333,
+      "last_used": "2026-04-01T16:55:00Z",
+      "error_rate": 0.08
+    }
+  }
+}
