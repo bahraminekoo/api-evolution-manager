@@ -63,7 +63,6 @@ Then open http://localhost:5173 and click "Run Demo Analysis"
 
 - Read the full [Getting Started Guide](docs/GETTING_STARTED.md)
 - Review the [Architecture Documentation](docs/ARCHITECTURE.md)
-- Check out the [Demo Guide](docs/DEMO_GUIDE.md) for presentation tips
 
 ## Troubleshooting
 

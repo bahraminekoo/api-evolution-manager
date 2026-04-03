@@ -161,20 +161,13 @@ APIEvolutionManager/
 - Maps client dependencies
 - Calculates risk scores
 
-## 💼 Portfolio Value
+## �️ Technology Stack
 
-This project demonstrates:
-
-✅ **Advanced AI/ML**: Multi-agent systems with LangChain & LangGraph  
-✅ **Modern Tech Stack**: Python, FastAPI, OpenAI GPT-4  
-✅ **Real-World Problem**: API evolution is a universal pain point  
-✅ **Production-Ready**: Error handling, testing, documentation  
-✅ **Scalable Architecture**: Extensible to real log analysis, GitHub integration  
-
-### Resume Bullet Points:
-- "Built multi-agent AI system using LangChain/LangGraph for automated API evolution management"
-- "Reduced API migration planning time by 80% through intelligent impact analysis"
-- "Designed full-stack application with FastAPI and OpenAI GPT-4 integration"
+- **AI/ML**: LangChain, LangGraph, OpenAI GPT-4
+- **Backend**: Python 3.10+, FastAPI, Pydantic
+- **Data Validation**: OpenAPI 3.0 spec validation
+- **Testing**: pytest, pytest-asyncio
+- **Architecture**: Multi-agent system with state management
 
 ## 🔮 Future Enhancements
 
@@ -210,11 +203,11 @@ This project demonstrates:
 
 ## 🤝 Contributing
 
-This is a portfolio project, but suggestions and improvements are welcome!
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-MIT License - feel free to use this project for learning and portfolio purposes.
+MIT License - See LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
@@ -223,7 +216,3 @@ Built with:
 - [LangGraph](https://langchain-ai.github.io/langgraph/) - Agent orchestration
 - [FastAPI](https://fastapi.tiangolo.com/) - Modern web framework
 - [OpenAI](https://openai.com/) - GPT-4 language model
-
----
-
-**Author**: Built as a portfolio project to demonstrate advanced AI agent systems and practical problem-solving.
