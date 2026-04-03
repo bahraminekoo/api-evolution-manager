@@ -132,7 +132,12 @@ async def analyze_demo():
     """
     try:
         # Use mock data paths
-        base_path = os.path.join(os.path.dirname(__file__), "../../../mock_data")
+        # __file__ is at: backend/src/api/main.py
+        # We need to go to: backend/mock_data
+        current_dir = os.path.dirname(__file__)  # backend/src/api
+        src_dir = os.path.dirname(current_dir)    # backend/src
+        backend_dir = os.path.dirname(src_dir)    # backend
+        base_path = os.path.join(backend_dir, "mock_data")
         
         old_spec_path = os.path.join(base_path, "v1_api_spec.json")
         new_spec_path = os.path.join(base_path, "v2_api_spec.json")
