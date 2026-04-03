@@ -1,5 +1,5 @@
 from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from typing import List, Dict
 from ..models.api_spec import APISpec
 from ..models.usage_data import UsageData

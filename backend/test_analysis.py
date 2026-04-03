@@ -9,7 +9,7 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from agents.orchestrator import OrchestratorAgent
+from src.agents.orchestrator import OrchestratorAgent
 
 
 def main():

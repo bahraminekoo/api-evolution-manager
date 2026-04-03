@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+import os
 
 
 class Settings(BaseSettings):
@@ -11,7 +12,8 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     
     class Config:
-        env_file = ".env"
+        # Look for .env in project root
+        env_file = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".env")
         case_sensitive = False
 
 
