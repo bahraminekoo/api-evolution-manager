@@ -1,8 +1,19 @@
 # API Evolution Manager
 
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![LangChain](https://img.shields.io/badge/LangChain-🦜-green.svg)](https://python.langchain.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+
 An intelligent multi-agent AI system built with LangChain and LangGraph that helps developers manage REST API evolution by analyzing usage patterns, detecting breaking changes, and generating comprehensive migration guides.
 
-## 🎯 Overview
+## � Live Demo
+
+![API Evolution Manager Demo](assets/API%20Evolution%20Demo.gif)
+
+*Watch the multi-agent system analyze API changes, detect breaking changes, and generate migration guides in real-time*
+
+## �🎯 Overview
 
 API Evolution Manager solves a critical problem that current AI assistants don't handle well: managing API changes across multiple codebases. It uses a sophisticated multi-agent architecture to:
 
@@ -131,7 +142,7 @@ APIEvolutionManager/
 │   ├── mock_data/               # Demo data
 │   ├── test_analysis.py         # Test script
 │   └── requirements.txt
-├── frontend/                    # React dashboard (coming soon)
+├── frontend/                    # Web dashboard
 ├── docs/                        # Documentation
 └── README.md
 ```
