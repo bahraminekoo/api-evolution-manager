@@ -20,11 +20,14 @@ class SpecAnalyzerAgent:
     """Agent responsible for analyzing API specifications"""
     
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model=settings.openai_model,
-            temperature=0.1,
-            api_key=settings.openai_api_key
-        )
+        llm_params = {
+            "model": settings.openai_model,
+            "temperature": 0.1,
+            "api_key": settings.openai_api_key
+        }
+        if settings.openai_base_url:
+            llm_params["base_url"] = settings.openai_base_url
+        self.llm = ChatOpenAI(**llm_params)
         self.parser = PydanticOutputParser(pydantic_object=SpecAnalysis)
     
     def analyze_spec(self, spec: APISpec) -> SpecAnalysis:

@@ -9,11 +9,14 @@ class UsageTrackerAgent:
     """Agent responsible for analyzing API usage patterns"""
     
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model=settings.openai_model,
-            temperature=0.1,
-            api_key=settings.openai_api_key
-        )
+        llm_params = {
+            "model": settings.openai_model,
+            "temperature": 0.1,
+            "api_key": settings.openai_api_key
+        }
+        if settings.openai_base_url:
+            llm_params["base_url"] = settings.openai_base_url
+        self.llm = ChatOpenAI(**llm_params)
     
     def analyze_usage_patterns(self, usage_data: UsageData) -> str:
         """Analyze usage patterns and generate insights"""

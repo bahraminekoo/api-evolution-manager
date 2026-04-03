@@ -12,11 +12,14 @@ class ImpactAssessorAgent:
     """Agent responsible for assessing the impact of API changes"""
     
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model=settings.openai_model,
-            temperature=0.2,
-            api_key=settings.openai_api_key
-        )
+        llm_params = {
+            "model": settings.openai_model,
+            "temperature": 0.2,
+            "api_key": settings.openai_api_key
+        }
+        if settings.openai_base_url:
+            llm_params["base_url"] = settings.openai_base_url
+        self.llm = ChatOpenAI(**llm_params)
         self.diff_analyzer = DiffAnalyzer()
     
     def assess_impact(
